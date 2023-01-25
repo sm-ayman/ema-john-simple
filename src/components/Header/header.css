@@ -1,0 +1,21 @@
+.navbar{
+    height: 80px;
+    background-color:#1c2b35;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 140px ;
+    padding-right: 140px ;
+}
+
+.navbar a{
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.navbar a:hover{
+    color: tomato;
+}
