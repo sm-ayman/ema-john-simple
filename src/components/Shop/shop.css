@@ -10,6 +10,11 @@
     margin-left: 0.5em;
 }
 
+.cart-container{
+    background-color: #FFE0B3;
+    text-align: center;
+}
+
 /* @media screen and (max-width:1000px) {
     .products-conatiner{
         grid-template-columns: repeat(2,1fr);
