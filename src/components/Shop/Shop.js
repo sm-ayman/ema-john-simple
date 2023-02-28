@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import './shop.css'
-import  Product from '../Product/Product'
+import Product from '../Product/Product'
 import Cart from '../Cart/Cart';
-import { addToDb, getStoredCart } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getStoredCart } from '../../utilities/fakedb';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);  ---1
+    const products = useLoaderData();
     const [cart, setCart] = useState([]);
 
+    const clearCart = () => {
+        setCart([]);
+        deleteShoppingCart();
+    }
+
+    /*                                               ---1
     useEffect(() => {
         fetch('products.json')
         .then(res => res.json())
         .then(data => setProducts(data))
-    },[])
+    },[]);
+    */
 
     useEffect(() => {
-         const storedCart = getStoredCart();
-         const savedCart = [];
-        for(const id in storedCart){
+        const storedCart = getStoredCart();
+        const savedCart = [];
+        for (const id in storedCart) {
             const addedProduct = products.find(product => product.id === id);
             // console.log(addedProduct);
-            if(addedProduct){
+            if (addedProduct) {
                 const quantity = storedCart[id];
                 addedProduct.quantity = quantity;
                 // console.log(addedProduct);
@@ -28,18 +37,18 @@ const Shop = () => {
             }
         }
         setCart(savedCart);
-    },[products])
+    }, [products])
 
-    const handleAddToCart = (selectedProduct) => {        
+    const handleAddToCart = (selectedProduct) => {
         // console.log(product.name);
         // cart.push(product);      !do not do this 
         let newCart = [];
         const exists = cart.find(product => product.id == selectedProduct.id);
-        if(!exists){
+        if (!exists) {
             selectedProduct.quantity = 1;
             newCart = [...cart, selectedProduct];
         }
-        else{
+        else {
             const rest = cart.filter(product => product.id != selectedProduct.id);
             exists.quantity += 1;
             newCart = [...rest, exists];
@@ -53,16 +62,20 @@ const Shop = () => {
         <div className='shop-container'>
             <div className='product-container'>
                 {
-                    products.map((product) => <Product 
-                    key={product.id}
-                    product = {product}
-                    handleAddToCart = {handleAddToCart}
+                    products.map((product) => <Product
+                        key={product.id}
+                        product={product}
+                        handleAddToCart={handleAddToCart}
                     ></Product>)
                 }
                 {/* <h2>This is Product: {products.length} </h2> */}
             </div>
-            <div className='cart-container'> 
-                <Cart cart={cart}></Cart>
+            <div className='cart-container'>
+                <Cart clearCart={clearCart} cart={cart}>
+                    <Link to={'/orders'}>
+                        <button>Review Orders</button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );

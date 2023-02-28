@@ -1,7 +1,7 @@
 import React from 'react';
 import './cart.css'
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, clearCart, children }) => {
 
     let total = 0, shipping = 0, quantity = 0;
     for (const product of cart) {
@@ -21,6 +21,8 @@ const Cart = ({ cart }) => {
             <p>Total Shipping: ${shipping}</p>
             <p>Tax: ${tax}</p>
             <h5>Grand Total:  ${grandTotal.toFixed(2)}</h5>
+            <button onClick={clearCart}>Clear Cart</button>
+            {children}
         </div>
     );
 };
