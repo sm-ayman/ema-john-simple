@@ -19,3 +19,9 @@
 .navbar a:hover{
     color: tomato;
 }
+.btn-logout{
+    margin: 0px 10px 0px 10px; /* top | right | bottom | left */
+}
+.user-email{
+    color: blueviolet;
+}
